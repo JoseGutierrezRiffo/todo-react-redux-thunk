@@ -9,6 +9,7 @@ import {
   listTodoAction,
   updateTodoAction,
 } from "./actions/todoActions";
+import dayjs from "dayjs";
 import "./App.css";
 
 function App() {
@@ -47,7 +48,7 @@ function App() {
   // FUNC NOTIFICACION
   const showConfirmDelete = (id) => {
     confirm({
-      title: "¿Desea eliminar este registro?",
+      title: "¿Estás seguro de que quieres borrar la tarea?",
       icon: <ExclamationCircleOutlined />,
       onOk() {
         dispatch(deleteTodoAction(id));
@@ -85,26 +86,29 @@ function App() {
     {
       title: "Nro Tarea",
       dataIndex: "id",
-
-      render: (text) => <a>{text}</a>,
+      render: (value) => <span>{value}</span>,
     },
     {
-      title: "Descripcion",
+      title: "Descripción",
       dataIndex: "description",
+      render: (value) => <span>{value}</span>,
     },
     {
       title: "Fecha de Ingreso",
       dataIndex: "dateAdmission",
+      render: (_, value) => {
+        return <span>{dayjs(value.dateAdmission).format("DD/MM/YYYY")}</span>;
+      },
     },
     {
       title: "Vigencia",
       dataIndex: "currentState",
 
-      render: (text) => {
+      render: (_, value) => {
         return (
-          <>
-            <Tag key={text?.id}>{text ? "Vigente" : "No Vigente"}</Tag>
-          </>
+          <Tag key={value?.id}>
+            {value.currentState ? "Vigente" : "No Vigente"}
+          </Tag>
         );
       },
     },
@@ -135,7 +139,7 @@ function App() {
         handleAdd={handleAdd}
       />
       <Modal
-        title={selectedTodo === null ? "Crear Registro" : "Editar Registro"}
+        title={selectedTodo === null ? "Crear Tarea" : "Editar Tarea"}
         visible={isModalVisible}
         onCancel={handleCancel}
         maskClosable={false}
@@ -171,7 +175,7 @@ function App() {
           </Form.Item>
           <Form.Item>
             <Button type="primary" block htmlType="submit">
-              {selectedTodo ? "EDITAR REGISTRO" : "CREAR NUEVO REGISTRO"}
+              {selectedTodo ? "EDITAR TAREA" : "CREAR NUEVA TAREA"}
             </Button>
           </Form.Item>
         </Form>
