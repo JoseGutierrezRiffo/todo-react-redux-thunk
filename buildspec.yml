@@ -21,6 +21,8 @@ artifacts:
   # include all files required to run application
   # notably excluded is node_modules, as this will cause overwrite error on deploy
   files:
-    - "**/*"
-  discard-paths: no
-  base-directory: dist
+    - public/**/*
+    - src/**/*
+    - package.json
+    - appspec.yml
+    - scripts/**/*
