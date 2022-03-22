@@ -1,28 +1,19 @@
 version: 0.2
 
 phases:
-  install:
-    commands:
-      # install Node 14
-      - echo installing node 14...
-      - curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
-      - apt install -y nodejs
-      # install npm
-      - echo installing dependencies...
-      - npm install
-
-  build:
+  pre-build:
     commands:
       # run build script
-      - echo running build script...
-      - npm run-script build
-
+      - echo npm install...
+      - npm install
+  build:
+    commands:
+      - echo npm run build...
+      - npm run build
 artifacts:
   # include all files required to run application
   # notably excluded is node_modules, as this will cause overwrite error on deploy
   files:
-    - public/**/*
-    - src/**/*
-    - package.json
-    - appspec.yml
-    - scripts/**/*
+    - '**/*'
+  discard-paths: no
+  base-directory: build
