@@ -103,10 +103,15 @@ function App() {
     {
       title: "Vigencia",
       dataIndex: "currentState",
-
       render: (_, value) => {
+        let colorTag = "geekblue";
+        if (value.currentState) {
+          colorTag = "geekblue";
+        } else {
+          colorTag = "volcano";
+        }
         return (
-          <Tag key={value?.id}>
+          <Tag key={value?.id} color={colorTag}>
             {value.currentState ? "Vigente" : "No Vigente"}
           </Tag>
         );
